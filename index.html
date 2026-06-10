@@ -395,19 +395,51 @@
   })();
 
   (function(){
+    // ── SET THIS ─────────────────────────────────────────────
+    // 1. Create a free form at formspree.io
+    // 2. Set its notification email to zach@fieldwork.systems
+    // 3. Paste your endpoint below, replacing YOUR_FORM_ID
+    var FORMSPREE_ENDPOINT = "https://formspree.io/f/mzdqvqwr";
+    // ─────────────────────────────────────────────────────────
+
     var form=document.getElementById('fieldForm');
     var err=document.getElementById('err');
     var confirm=document.getElementById('confirm');
+    var btn=form.querySelector('.submit');
+
+    function showConfirm(){
+      err.style.display='none';
+      form.style.display='none';
+      confirm.style.display='block';
+      confirm.scrollIntoView({behavior:'smooth',block:'center'});
+    }
+    function showError(msg){
+      err.textContent=msg||"Something went wrong. Try again, or email zach@fieldwork.systems.";
+      err.style.display='block';
+    }
+
     form.addEventListener('submit',function(ev){
       ev.preventDefault();
       var name=document.getElementById('name').value.trim();
       var email=document.getElementById('email').value.trim();
       var okEmail=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-      if(!name||!okEmail){err.style.display='block';return;}
+      if(!name||!okEmail){showError("Add your name and a valid email so I can reply.");return;}
       err.style.display='none';
-      form.style.display='none';
-      confirm.style.display='block';
-      confirm.scrollIntoView({behavior:'smooth',block:'center'});
+
+      // Until the Formspree endpoint is set, just confirm without sending.
+      if(FORMSPREE_ENDPOINT.indexOf('YOUR_FORM_ID')!==-1){showConfirm();return;}
+
+      btn.disabled=true;btn.style.opacity='0.6';
+      fetch(FORMSPREE_ENDPOINT,{method:'POST',headers:{'Accept':'application/json'},body:new FormData(form)})
+        .then(function(res){
+          if(res.ok){showConfirm();}
+          else{res.json().then(function(d){
+            var m=(d&&d.errors&&d.errors.length)?d.errors.map(function(e){return e.message;}).join(', '):null;
+            showError(m);
+          }).catch(function(){showError();});}
+        })
+        .catch(function(){showError();})
+        .finally(function(){btn.disabled=false;btn.style.opacity='1';});
     });
   })();
 </script>
