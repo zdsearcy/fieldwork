@@ -148,8 +148,8 @@
   .bio p{font-size:1.1rem;max-width:56ch}
   .bio p + p{margin-top:16px}
   .proof{display:flex;flex-wrap:wrap;gap:0;margin-top:30px;border-top:1px solid var(--line)}
-  .proof div{padding:18px 26px 18px 0;border-right:1px solid var(--line);margin-right:26px}
-  .proof div:last-child{border-right:none;margin-right:0}
+  .proof > div{padding:18px 26px 18px 0;border-right:1px solid var(--line);margin-right:26px}
+  .proof > div:last-child{border-right:none;margin-right:0}
   .proof .fig{font-family:"Archivo",sans-serif;font-weight:800;font-size:1.5rem;color:var(--ink)}
   .proof .lab{font-family:"Space Mono",monospace;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--graphite);margin-top:6px}
   @media (max-width:760px){.bio-grid{grid-template-columns:1fr;gap:24px}}
@@ -339,7 +339,7 @@
   <div class="wrap reveal">
     <div class="eyebrow"><span class="mono">&sect; 08 / Start</span><span class="mono coord">Reply &le; 2 business days</span></div>
     <div class="form-head">Start a Field Study.</div>
-    <p class="form-sub">Tell me what you're trying to figure out. No pitch deck required, just the real problem.</p>
+    <p class="form-sub">Tell me what you're trying to figure out.</p>
 
     <form id="fieldForm" novalidate>
       <div class="row">
@@ -349,17 +349,6 @@
       <div class="row">
         <div class="field"><label for="role">Role</label><input type="text" id="role" name="role" autocomplete="organization-title"></div>
         <div class="field"><label for="email">Email</label><input type="email" id="email" name="email" autocomplete="email"></div>
-      </div>
-      <div class="field">
-        <label for="stage">Company stage</label>
-        <select id="stage" name="stage">
-          <option value="">Select one</option>
-          <option>Pre-seed / Seed</option>
-          <option>Series A</option>
-          <option>Series B</option>
-          <option>Series C or later</option>
-          <option>Bootstrapped / Profitable</option>
-        </select>
       </div>
       <div class="field">
         <label for="problem">What's the story problem?</label>
