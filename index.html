@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Field Study / Fieldwork</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E6E3DA;
+    --paper-2:#DEDACE;
+    --ink:#17160F;
+    --graphite:#6E6A5F;
+    --line:#CBC6B8;
+    --mark:#DB4B24;
+    --slate:#222A26;
+    --slate-line:#3C453F;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Newsreader",Georgia,serif;
+    font-size:18px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  .mono{
+    font-family:"Space Mono",monospace;
+    text-transform:uppercase;
+    letter-spacing:0.18em;
+    font-size:0.7rem;
+    color:var(--graphite);
+  }
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 32px}
+
+  .frame{position:fixed;inset:14px;pointer-events:none;z-index:50}
+  .frame span{position:absolute;width:13px;height:13px;border:0 solid var(--mark)}
+  .frame .tl{top:0;left:0;border-top-width:2px;border-left-width:2px}
+  .frame .tr{top:0;right:0;border-top-width:2px;border-right-width:2px}
+  .frame .bl{bottom:0;left:0;border-bottom-width:2px;border-left-width:2px}
+  .frame .br{bottom:0;right:0;border-bottom-width:2px;border-right-width:2px}
+  @media (max-width:640px){.frame{inset:8px}}
+
+  .topbar{position:relative;z-index:10;display:flex;justify-content:space-between;align-items:center;
+    padding:26px 32px;max-width:1080px;margin:0 auto;border-bottom:1px solid var(--line)}
+  .brand{font-family:"Archivo",sans-serif;font-weight:800;letter-spacing:0.04em;font-size:1rem;text-transform:uppercase}
+  .brand b{color:var(--mark)}
+
+  .section{position:relative;padding:96px 0;border-bottom:1px solid var(--line)}
+  .section--hero{padding:76px 0 92px}
+  .section--dark{background:var(--slate);color:var(--paper);border-bottom:none}
+  .eyebrow{display:flex;gap:18px;align-items:baseline;margin-bottom:34px;flex-wrap:wrap}
+  .eyebrow .coord{color:var(--mark)}
+
+  h1{
+    font-family:"Archivo",sans-serif;
+    font-weight:900;
+    font-size:clamp(2.7rem,7vw,6rem);
+    line-height:0.96;
+    letter-spacing:-0.02em;
+    max-width:15ch;
+  }
+  h1 em{font-style:normal;color:var(--mark)}
+  .lede{font-size:clamp(1.15rem,1.9vw,1.5rem);max-width:48ch;margin-top:30px;color:#34322A}
+  .hero-meta{margin-top:38px;display:flex;flex-wrap:wrap;gap:20px;align-items:center}
+
+  .cta{
+    display:inline-flex;align-items:center;gap:12px;
+    font-family:"Archivo",sans-serif;font-weight:700;font-size:0.95rem;
+    text-transform:uppercase;letter-spacing:0.06em;
+    background:var(--ink);color:var(--paper);
+    padding:16px 26px;border:none;cursor:pointer;text-decoration:none;
+    transition:background .2s ease,transform .2s ease;
+  }
+  .cta:hover{background:var(--mark);transform:translateY(-2px)}
+  .cta .arr{transition:transform .2s ease}
+  .cta:hover .arr{transform:translateX(4px)}
+  .hero-note{font-size:0.95rem;color:var(--graphite);max-width:36ch;font-style:italic}
+
+  h2{font-family:"Archivo",sans-serif;font-weight:800;font-size:clamp(1.7rem,3.4vw,2.7rem);
+    line-height:1.04;letter-spacing:-0.01em;max-width:20ch}
+  .section p.body{max-width:54ch;margin-top:22px;font-size:1.12rem}
+  .section p.body + p.body{margin-top:18px}
+
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:54px;border-top:1px solid var(--line)}
+  .step{padding:30px 26px 34px;border-right:1px solid var(--line)}
+  .step:last-child{border-right:none}
+  .step .num{font-family:"Space Mono",monospace;color:var(--mark);font-size:0.8rem;letter-spacing:0.1em}
+  .step h3{font-family:"Archivo",sans-serif;font-weight:700;font-size:1.25rem;margin:14px 0 10px}
+  .step p{font-size:1rem;color:#3a382f}
+  @media (max-width:760px){.steps{grid-template-columns:1fr}.step{border-right:none;border-bottom:1px solid var(--line)}.step:last-child{border-bottom:none}}
+
+  .weeks{margin-top:52px}
+  .week{display:grid;grid-template-columns:120px 1fr;gap:28px;padding:26px 0;border-top:1px solid var(--line);align-items:start}
+  .week:last-child{border-bottom:1px solid var(--line)}
+  .week .wk{font-family:"Archivo",sans-serif;font-weight:900;font-size:2.1rem;color:var(--mark);line-height:1}
+  .week .wk small{display:block;font-family:"Space Mono",monospace;font-weight:400;font-size:0.62rem;letter-spacing:0.16em;color:var(--graphite);margin-top:8px}
+  .week h3{font-family:"Archivo",sans-serif;font-weight:700;font-size:1.25rem;margin-bottom:8px}
+  .week p{font-size:1.02rem;color:#3a382f;max-width:60ch}
+  @media (max-width:620px){.week{grid-template-columns:1fr;gap:10px}.week .wk{font-size:1.5rem}}
+
+  .scope-cols{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:46px;border-top:1px solid var(--line)}
+  .scope-cols .scope-block:first-child{border-right:1px solid var(--line);padding:26px 30px 14px 0}
+  .scope-cols .scope-block:last-child{padding:26px 0 14px 30px}
+  @media (max-width:760px){.scope-cols{grid-template-columns:1fr}.scope-cols .scope-block:first-child{border-right:none;border-bottom:1px solid var(--line);padding:24px 0 14px}.scope-cols .scope-block:last-child{padding:24px 0 14px}}
+
+  .scope-block h4{font-family:"Space Mono",monospace;text-transform:uppercase;letter-spacing:0.14em;font-size:0.7rem;color:var(--graphite);margin-bottom:4px}
+  .acc{border-top:1px solid var(--line)}
+  .acc-item{border-bottom:1px solid var(--line)}
+  .acc-item summary{list-style:none;cursor:pointer;display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:15px 0}
+  .acc-item summary::-webkit-details-marker{display:none}
+  .acc-item summary:focus-visible{outline:2px solid var(--mark);outline-offset:3px}
+  .acc-left{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .acc-name{font-family:"Archivo",sans-serif;font-weight:700;font-size:1.05rem;letter-spacing:-0.005em}
+  .acc-tag{font-family:"Space Mono",monospace;text-transform:uppercase;letter-spacing:0.1em;font-size:0.58rem;color:var(--graphite)}
+  .plus{font-family:"Archivo",sans-serif;font-weight:600;color:var(--mark);font-size:1.25rem;line-height:1;flex-shrink:0;transition:transform .25s ease}
+  .acc-item[open] .plus{transform:rotate(45deg)}
+  .acc-body{padding:0 0 18px;max-width:52ch;font-size:1rem;color:#3a382f}
+  @media (prefers-reduced-motion:reduce){.plus{transition:none}}
+
+  .price{margin-top:46px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:30px}
+  .price .fig{font-family:"Archivo",sans-serif;font-weight:900;font-size:clamp(2.2rem,4.6vw,3.4rem);line-height:0.9;letter-spacing:-0.02em}
+  .price .det{font-family:"Space Mono",monospace;font-size:0.72rem;letter-spacing:0.12em;color:var(--graphite);text-transform:uppercase}
+  .roi{max-width:52ch;margin-top:26px;font-size:1.05rem;color:#3a382f}
+
+  .who li{font-size:1.12rem;padding:14px 0;border-top:1px solid var(--line);max-width:62ch}
+  .who{list-style:none;margin-top:40px}
+  .who li:last-child{border-bottom:1px solid var(--line)}
+
+  /* bio */
+  .bio-grid{display:grid;grid-template-columns:0.8fr 1.2fr;gap:48px;margin-top:46px;align-items:start}
+  .bio-name{font-family:"Archivo",sans-serif;font-weight:900;font-size:1.9rem;line-height:1;letter-spacing:-0.01em}
+  .bio-role{font-family:"Space Mono",monospace;text-transform:uppercase;letter-spacing:0.14em;font-size:0.66rem;color:var(--graphite);margin-top:14px;line-height:1.7}
+  .bio p{font-size:1.1rem;max-width:56ch}
+  .bio p + p{margin-top:16px}
+  .proof{display:flex;flex-wrap:wrap;gap:0;margin-top:30px;border-top:1px solid var(--line)}
+  .proof div{padding:18px 26px 18px 0;border-right:1px solid var(--line);margin-right:26px}
+  .proof div:last-child{border-right:none;margin-right:0}
+  .proof .fig{font-family:"Archivo",sans-serif;font-weight:800;font-size:1.5rem;color:var(--ink)}
+  .proof .lab{font-family:"Space Mono",monospace;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--graphite);margin-top:6px}
+  @media (max-width:760px){.bio-grid{grid-template-columns:1fr;gap:24px}}
+
+  .section--dark .eyebrow .mono{color:#9b988c}
+  .section--dark .eyebrow .coord{color:var(--mark)}
+  .form-head{font-family:"Archivo",sans-serif;font-weight:800;font-size:clamp(1.9rem,4vw,3rem);line-height:1;letter-spacing:-0.01em}
+  .form-sub{margin-top:20px;max-width:46ch;color:#c9c5b8;font-size:1.1rem}
+  form{margin-top:46px;max-width:640px}
+  .field{margin-bottom:26px}
+  .field label{display:block;font-family:"Space Mono",monospace;text-transform:uppercase;letter-spacing:0.14em;font-size:0.66rem;color:#9b988c;margin-bottom:10px}
+  .field input,.field select,.field textarea{
+    width:100%;background:transparent;border:none;border-bottom:1px solid var(--slate-line);
+    color:var(--paper);font-family:"Newsreader",serif;font-size:1.1rem;padding:8px 0 12px;
+  }
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-bottom-color:var(--mark)}
+  .field textarea{resize:vertical;min-height:64px}
+  .field select{appearance:none;cursor:pointer}
+  .field select option{color:var(--ink)}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+  @media (max-width:560px){.row{grid-template-columns:1fr;gap:0}}
+  .submit{
+    margin-top:14px;background:var(--mark);color:#fff;border:none;cursor:pointer;
+    font-family:"Archivo",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;
+    font-size:0.95rem;padding:18px 30px;display:inline-flex;align-items:center;gap:12px;transition:background .2s,transform .2s;
+  }
+  .submit:hover{background:#fff;color:var(--ink);transform:translateY(-2px)}
+  .err{color:var(--mark);font-family:"Space Mono",monospace;font-size:0.72rem;margin-top:14px;display:none}
+  .confirm{display:none;border-top:2px solid var(--mark);padding-top:30px;margin-top:10px}
+  .confirm h3{font-family:"Archivo",sans-serif;font-weight:800;font-size:1.6rem;color:var(--paper)}
+  .confirm p{margin-top:14px;color:#c9c5b8;max-width:42ch}
+
+  footer{background:var(--slate);color:#8d8a7e;padding:34px 0 46px;border-top:1px solid var(--slate-line)}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}
+  footer .mono{color:#8d8a7e}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+
+<div class="frame" aria-hidden="true"><span class="tl"></span><span class="tr"></span><span class="bl"></span><span class="br"></span></div>
+
+<div class="topbar">
+  <div class="brand">Field<b>work</b></div>
+  <div class="mono">The Field Study</div>
+</div>
+
+<!-- HERO -->
+<section class="section section--hero">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="mono">&sect; 01 / Entry Engagement</span><span class="mono coord">N 33.52&deg; W 86.81&deg;</span></div>
+    <h1>Conviction comes from the <em>field</em>, not the conference room.</h1>
+    <p class="lede">The Field Study is a five-week engagement that builds your messaging from what your customers and the people who sell to them actually say.</p>
+    <div class="hero-meta">
+      <a href="#start" class="cta">Start a Field Study <span class="arr">→</span></a>
+      <span class="hero-note">For B2B SaaS companies whose buyers are skeptical, peer-driven, and slow to trust a new system.</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="section">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="mono">&sect; 02 / The Problem</span></div>
+    <h2>The people who write the message sit furthest from the buyer.</h2>
+    <p class="body">Your sellers hear the language every day. The objection they have answered forty times. The exact phrase a prospect used right before the deal turned. It is the most honest market research you own, and it disappears the second the call ends.</p>
+    <p class="body">So the website talks one way and the buyer talks another. The gap is quiet, but it is expensive. It shows up as longer sales cycles, weaker inbound, and a brand that sounds like every other vendor in the category instead of the one that gets it.</p>
+  </div>
+</section>
+
+<!-- METHOD -->
+<section class="section">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="mono">&sect; 03 / The Method</span></div>
+    <h2>Go to the field. Listen to how your buyers actually talk. Build from there.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="num">01</div>
+        <h3>Field research</h3>
+        <p>Customer interviews, recorded sales calls, and the channels where your buyers already talk to each other.</p>
+      </div>
+      <div class="step">
+        <div class="num">02</div>
+        <h3>Signal</h3>
+        <p>Objections, the exact words buyers use, the use cases and the stories that land, pulled into one structured library.</p>
+      </div>
+      <div class="step">
+        <div class="num">03</div>
+        <h3>Architecture</h3>
+        <p>A conviction and messaging system built on evidence you can point to, ready for everything downstream to draw from.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="section">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="mono">&sect; 04 / The Process</span><span class="mono coord">Five Weeks</span></div>
+    <h2>Five weeks, fixed scope, real artifacts at the end.</h2>
+    <div class="weeks">
+      <div class="week"><div class="wk">W1<small>Access</small></div><div><h3>Access &amp; immersion</h3><p>Kickoff, gather existing sales-call recordings, line up customer interviews, and schedule time with sales, customer success, product, and a founder or exec.</p></div></div>
+      <div class="week"><div class="wk">W2–3<small>Field</small></div><div><h3>Field research</h3><p>Eight to twelve customer interviews, mining of recorded sales calls, and optional time on-site or inside your buyers' channels. Everything captured and structured into the signal library.</p></div></div>
+      <div class="week"><div class="wk">W4<small>Synthesis</small></div><div><h3>Synthesis</h3><p>The patterns surface: the conviction, the verbatim customer language, the recurring objections, and the themes that move conversations forward.</p></div></div>
+      <div class="week"><div class="wk">W5<small>Build</small></div><div><h3>Architecture &amp; readout</h3><p>The messaging architecture gets built and presented, with a clear view of what a content system would put to work next.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- THE ENGAGEMENT (included + expansion + price) -->
+<section class="section">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="mono">&sect; 05 / The Engagement</span></div>
+    <h2>What's included, and where it goes.</h2>
+    <div class="scope-cols">
+    <div class="scope-block">
+      <h4>In the Field Study</h4>
+      <div class="acc">
+        <details class="acc-item"><summary><span class="acc-left"><span class="acc-name">Signals</span><span class="acc-tag">The library</span></span><span class="plus">+</span></summary><div class="acc-body">Field research, customer interviews, and sales-call mining, pulled into one structured record: the objections, the verbatim language, the use cases, and the moments a deal turned.</div></details>
+        <details class="acc-item"><summary><span class="acc-left"><span class="acc-name">Conviction</span><span class="acc-tag">The point of view</span></span><span class="plus">+</span></summary><div class="acc-body">The field-sourced belief your brand can stand behind, written in plain language and built to outlast any one campaign.</div></details>
+        <details class="acc-item"><summary><span class="acc-left"><span class="acc-name">Messaging</span><span class="acc-tag">The architecture</span></span><span class="plus">+</span></summary><div class="acc-body">Positioning, narrative pillars, proof points, a customer-language lexicon, and ready answers to the objections you hear most.</div></details>
+        <details class="acc-item"><summary><span class="acc-left"><span class="acc-name">Starter</span><span class="acc-tag">First themes</span></span><span class="plus">+</span></summary><div class="acc-body">Three to five content themes the architecture points to, handed over ready to act on the week we wrap.</div></details>
+        <details class="acc-item"><summary><span class="acc-left"><span class="acc-name">Readout</span><span class="acc-tag">The handoff</span></span><span class="plus">+</span></summary><div class="acc-body">A working session that puts the findings in front of the people who have to carry the story, so it lands as a shared belief.</div></details>
+      </div>
+    </div>
+    <div class="scope-block">
+      <h4>Where it goes next</h4>
+      <div class="acc">
+        <details class="acc-item"><summary><span class="acc-left"><span class="acc-name">Field Site</span><span class="acc-tag">Website &amp; homepage</span></span><span class="plus">+</span></summary><div class="acc-body">Your most-visited page rebuilt around the conviction, so the first thing a buyer reads is the thing they already believe. The architecture, made public.</div></details>
+        <details class="acc-item"><summary><span class="acc-left"><span class="acc-name">Field Reports</span><span class="acc-tag">Customer case studies</span></span><span class="plus">+</span></summary><div class="acc-body">Documented proof from real customers, told in their own language. The stories your sellers reach for in the middle of a deal.</div></details>
+        <details class="acc-item"><summary><span class="acc-left"><span class="acc-name">Field Dispatch</span><span class="acc-tag">Ongoing production</span></span><span class="plus">+</span></summary><div class="acc-body">A steady run of articles, posts, and assets pulled straight from the signal library, so the team never stares at a blank page.</div></details>
+        <details class="acc-item"><summary><span class="acc-left"><span class="acc-name">Field Guide</span><span class="acc-tag">Editorial system</span></span><span class="plus">+</span></summary><div class="acc-body">The calendar, briefs, and standards that keep every piece on-message as your output and your team grow.</div></details>
+        <details class="acc-item"><summary><span class="acc-left"><span class="acc-name">Field Campaign</span><span class="acc-tag">Integrated campaigns</span></span><span class="plus">+</span></summary><div class="acc-body">A focused push across channels with one idea carried from first touch to closed deal, built on the architecture instead of invented fresh.</div></details>
+        <details class="acc-item"><summary><span class="acc-left"><span class="acc-name">Field Team</span><span class="acc-tag">Sales, product &amp; exec voice</span></span><span class="plus">+</span></summary><div class="acc-body">Everyone who talks to customers becomes a voice in the market, each one working from the same shared conviction.</div></details>
+      </div>
+    </div>
+    </div>
+    <div class="price">
+      <div class="fig">Starting at $15K</div>
+      <div class="det">Five weeks · Remote or on-site · Expansion engagements priced separately</div>
+    </div>
+    <p class="roi">It replaces months of guessing and a positioning project that runs $50K and up at an agency. After it, every dollar you spend on campaigns, content, and enablement runs on messaging your buyers already validated.</p>
+  </div>
+</section>
+
+<!-- WHO -->
+<section class="section">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="mono">&sect; 06 / Who It's For</span></div>
+    <h2>B2B SaaS where trust has to be earned.</h2>
+    <ul class="who">
+      <li>Founders and marketing leaders at B2B SaaS companies selling into skeptical, word-of-mouth markets.</li>
+      <li>Categories where the buyers are their own community, and a peer's recommendation outweighs anything you can say about yourself.</li>
+      <li>Buyers who are wary of new tools and slow to adopt a new system, where credibility gets built one honest conversation at a time.</li>
+      <li>Teams with a strong product and a story still based on what they assume their buyers think.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- BIO -->
+<section class="section">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="mono">&sect; 07 / The Operator</span></div>
+    <div class="bio-grid">
+      <div>
+        <div class="bio-name">Zach Searcy</div>
+        <div class="bio-role">Founder, Fieldwork<br>Brand &amp; Content, B2B SaaS</div>
+      </div>
+      <div class="bio">
+        <p>I have spent about twelve years building brand and content for B2B software, most recently leading brand and content at a Series D SaaS company, where the work grew organic traffic 40%, lifted organic MQLs 30%, and built a content engine that now touches close to half of inbound.</p>
+        <p>Along the way I produced more than fifteen customer stories that sales still pulls into live deals, ran an eight-person brand team, and led a company's first national sponsorship. The best messaging usually already exists, in the words of the people who buy from you and the people who sell to them. Fieldwork is how I go get it.</p>
+        <div class="proof">
+          <div><div class="fig">+40%</div><div class="lab">Organic traffic</div></div>
+          <div><div class="fig">+30%</div><div class="lab">Organic MQLs</div></div>
+          <div><div class="fig">15+</div><div class="lab">Customer stories</div></div>
+          <div><div class="fig">8</div><div class="lab">Brand team led</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="section section--dark" id="start">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="mono">&sect; 08 / Start</span><span class="mono coord">Reply &le; 2 business days</span></div>
+    <div class="form-head">Start a Field Study.</div>
+    <p class="form-sub">Tell me what you're trying to figure out. No pitch deck required, just the real problem.</p>
+
+    <form id="fieldForm" novalidate>
+      <div class="row">
+        <div class="field"><label for="name">Name</label><input type="text" id="name" name="name" autocomplete="name"></div>
+        <div class="field"><label for="company">Company</label><input type="text" id="company" name="company" autocomplete="organization"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label for="role">Role</label><input type="text" id="role" name="role" autocomplete="organization-title"></div>
+        <div class="field"><label for="email">Email</label><input type="email" id="email" name="email" autocomplete="email"></div>
+      </div>
+      <div class="field">
+        <label for="stage">Company stage</label>
+        <select id="stage" name="stage">
+          <option value="">Select one</option>
+          <option>Pre-seed / Seed</option>
+          <option>Series A</option>
+          <option>Series B</option>
+          <option>Series C or later</option>
+          <option>Bootstrapped / Profitable</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="problem">What's the story problem?</label>
+        <textarea id="problem" name="problem" rows="3" placeholder="Where what you say and what your buyers believe don't line up..."></textarea>
+      </div>
+      <button type="submit" class="submit">Start a Field Study <span class="arr">→</span></button>
+      <div class="err" id="err">Add your name and a valid email so I can reply.</div>
+    </form>
+
+    <div class="confirm" id="confirm">
+      <h3>Field notes received.</h3>
+      <p>Thanks. I'll read this properly and reply within two business days with a few questions and next steps.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="mono">Fieldwork / The Field Study</span>
+    <span class="mono">Conviction, collected in the field</span>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var els=document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return;}
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});
+    },{threshold:0.12});
+    els.forEach(function(e){io.observe(e)});
+  })();
+
+  (function(){
+    var form=document.getElementById('fieldForm');
+    var err=document.getElementById('err');
+    var confirm=document.getElementById('confirm');
+    form.addEventListener('submit',function(ev){
+      ev.preventDefault();
+      var name=document.getElementById('name').value.trim();
+      var email=document.getElementById('email').value.trim();
+      var okEmail=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      if(!name||!okEmail){err.style.display='block';return;}
+      err.style.display='none';
+      form.style.display='none';
+      confirm.style.display='block';
+      confirm.scrollIntoView({behavior:'smooth',block:'center'});
+    });
+  })();
+</script>
+</body>
+</html>
