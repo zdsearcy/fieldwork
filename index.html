@@ -201,6 +201,63 @@
   .sticky-cta:hover .arr{transform:translateX(3px)}
   @media (max-width:560px){.sticky-cta{right:14px;bottom:14px;padding:13px 18px;font-size:0.76rem}}
   @media (prefers-reduced-motion:reduce){.sticky-cta{transform:none;transition:opacity .2s ease}.sticky-cta.show{transform:none}}
+
+  /* Field Notes nuances */
+  .specs{margin-top:42px;max-width:560px}
+  .specs h4{font-family:"Space Mono",monospace;text-transform:uppercase;letter-spacing:0.16em;font-size:0.7rem;color:var(--graphite);margin-bottom:14px}
+  .spec-row{display:flex;align-items:baseline;font-family:"Space Mono",monospace;font-size:0.72rem;letter-spacing:0.05em;text-transform:uppercase;padding:7px 0}
+  .spec-row .k{color:var(--graphite);white-space:nowrap}
+  .spec-row .dots{flex:1;border-bottom:1px dotted var(--line);margin:0 10px;position:relative;top:-3px}
+  .spec-row .v{color:var(--ink);white-space:nowrap;text-align:right;font-weight:700}
+
+  .checklist{margin-top:40px;max-width:60ch}
+  .check-group + .check-group{margin-top:28px}
+  .cl-label{display:block;margin-bottom:6px}
+  .check-item{display:flex;gap:14px;align-items:flex-start;padding:11px 0;border-top:1px solid var(--line);font-size:1.08rem;color:var(--ink)}
+  .check-item .box{flex-shrink:0;width:17px;height:17px;border:2px solid var(--graphite);position:relative;top:5px}
+  .check-item.check .box{background:var(--mark);border-color:var(--mark)}
+  .check-item.check .box::after{content:"";position:absolute;left:5px;top:1px;width:4px;height:8px;border:solid var(--paper);border-width:0 2px 2px 0;transform:rotate(45deg)}
+  .check-item:not(.check) .ct{color:var(--graphite)}
+
+  .stamp{display:inline-block;font-family:"Space Mono",monospace;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;font-size:1.05rem;color:var(--mark);border:2.5px solid var(--mark);border-radius:3px;padding:10px 18px;transform:rotate(-3.5deg);opacity:0.92}
+
+  footer .wrap{display:flex;align-items:center;gap:26px;justify-content:flex-start;flex-wrap:wrap}
+  .seal{width:84px;height:84px;flex-shrink:0}
+  .seal-text{font-family:"Space Mono",monospace;font-size:5.5px;letter-spacing:1.4px;fill:#8d8a7e}
+  .colophon .mono{display:block;line-height:1.95;color:#8d8a7e}
+  .colophon .dim{color:#6f6c61}
+  @media (max-width:560px){footer .wrap{gap:18px}.seal{width:72px;height:72px}}
+
+  /* included accordion + illustrations */
+  .scope-included{margin-top:46px}
+  .inc-item summary{justify-content:flex-start;align-items:center;gap:18px;padding:18px 0}
+  .inc-illus{flex-shrink:0;width:46px;height:46px;display:block}
+  .inc-illus svg{width:100%;height:100%;display:block}
+  .inc-item .acc-left{flex:1;display:flex;flex-direction:column;align-items:flex-start;gap:3px}
+  .inc-item .acc-name{font-size:1.18rem}
+  .inc-item .acc-body{padding:0 0 20px 64px;max-width:62ch}
+  @media (max-width:560px){.inc-item summary{gap:14px}.inc-illus{width:38px;height:38px}.inc-item .acc-body{padding-left:0}}
+
+  /* where it goes next - ledger style */
+  .scope-next{margin-top:50px;max-width:640px}
+  .next-item summary{justify-content:flex-start;align-items:baseline;gap:14px;padding:14px 0}
+  .next-item .acc-name{font-size:1.02rem}
+  .next-item .dots{flex:1;border-bottom:1px dotted var(--line);position:relative;top:-4px}
+  .next-item .acc-tag{white-space:nowrap}
+  .next-item .acc-body{font-size:0.98rem;max-width:62ch;padding-top:2px}
+
+  /* left section index */
+  .dotnav{position:fixed;left:20px;top:50%;transform:translateY(-50%);z-index:55;display:flex;gap:12px}
+  .dotnav-track{width:2px;background:var(--line);position:relative;border-radius:2px;align-self:stretch}
+  .dotnav-fill{position:absolute;left:0;top:0;width:100%;background:var(--mark);height:0;border-radius:2px;transition:height .1s linear}
+  .dotnav ul{list-style:none;display:flex;flex-direction:column;gap:13px;margin:0;padding:0}
+  .dotnav li a{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:"Space Mono",monospace;font-size:0.64rem;letter-spacing:0.1em;color:var(--graphite);line-height:1}
+  .dotnav .n{transition:color .2s ease}
+  .dotnav .lbl{text-transform:uppercase;white-space:nowrap;opacity:0;transform:translateX(-6px);transition:opacity .2s ease,transform .2s ease;pointer-events:none}
+  .dotnav:hover .lbl{opacity:1;transform:none}
+  .dotnav li a:hover .n{color:var(--ink)}
+  .dotnav li a.active .n{color:var(--mark);font-weight:700}
+  @media (max-width:1160px){.dotnav{display:none}}
 </style>
 </head>
 <body>
@@ -214,8 +271,23 @@
 
 <a href="#start" class="sticky-cta" aria-label="Start a Field Study">Start a Field Study <span class="arr">→</span></a>
 
+<nav class="dotnav" aria-label="Section index">
+  <span class="dotnav-track"><span class="dotnav-fill" id="dnFill"></span></span>
+  <ul>
+    <li><a href="#s01" data-target="s01"><span class="n">01</span><span class="lbl">Entry</span></a></li>
+    <li><a href="#s02" data-target="s02"><span class="n">02</span><span class="lbl">The Problem</span></a></li>
+    <li><a href="#s03" data-target="s03"><span class="n">03</span><span class="lbl">The Method</span></a></li>
+    <li><a href="#s04" data-target="s04"><span class="n">04</span><span class="lbl">The Process</span></a></li>
+    <li><a href="#s05" data-target="s05"><span class="n">05</span><span class="lbl">The Engagement</span></a></li>
+    <li><a href="#s06" data-target="s06"><span class="n">06</span><span class="lbl">Who It's For</span></a></li>
+    <li><a href="#s07" data-target="s07"><span class="n">07</span><span class="lbl">The Operator</span></a></li>
+    <li><a href="#s08" data-target="s08"><span class="n">08</span><span class="lbl">What Changes</span></a></li>
+    <li><a href="#start" data-target="start"><span class="n">09</span><span class="lbl">Start</span></a></li>
+  </ul>
+</nav>
+
 <!-- HERO -->
-<section class="section section--hero">
+<section class="section section--hero" id="s01">
   <div class="wrap reveal">
     <div class="eyebrow"><span class="mono">&sect; 01 / Entry Engagement</span><span class="mono coord">N 33.52&deg; W 86.81&deg;</span></div>
     <h1>Conviction comes from the <em>field</em>, not the conference room.</h1>
@@ -228,7 +300,7 @@
 </section>
 
 <!-- PROBLEM -->
-<section class="section">
+<section class="section" id="s02">
   <div class="wrap reveal">
     <div class="eyebrow"><span class="mono">&sect; 02 / The Problem</span></div>
     <h2>The people who write the message sit furthest from the buyer.</h2>
@@ -238,7 +310,7 @@
 </section>
 
 <!-- METHOD -->
-<section class="section">
+<section class="section" id="s03">
   <div class="wrap reveal">
     <div class="eyebrow"><span class="mono">&sect; 03 / The Method</span></div>
     <h2>Go to the field. Listen to how your buyers actually talk. Build from there.</h2>
@@ -263,7 +335,7 @@
 </section>
 
 <!-- PROCESS -->
-<section class="section">
+<section class="section" id="s04">
   <div class="wrap reveal">
     <div class="eyebrow"><span class="mono">&sect; 04 / The Process</span><span class="mono coord">Five Weeks</span></div>
     <h2>Five weeks, fixed scope, real artifacts at the end.</h2>
@@ -277,57 +349,78 @@
 </section>
 
 <!-- THE ENGAGEMENT (included + expansion + price) -->
-<section class="section">
+<section class="section" id="s05">
   <div class="wrap reveal">
     <div class="eyebrow"><span class="mono">&sect; 05 / The Engagement</span></div>
     <h2>What's included, and where it goes.</h2>
-    <div class="scope-cols">
-    <div class="scope-block">
+    <div class="scope-block scope-included">
       <h4>In the Field Study</h4>
-      <div class="acc">
-        <details class="acc-item"><summary><span class="acc-left"><span class="acc-name">Signals</span><span class="acc-tag">The library</span></span><span class="plus">+</span></summary><div class="acc-body">Field research, customer interviews, and sales-call mining, pulled into one structured record: the objections, the verbatim language, the use cases, and the moments a deal turned.</div></details>
-        <details class="acc-item"><summary><span class="acc-left"><span class="acc-name">Conviction</span><span class="acc-tag">The point of view</span></span><span class="plus">+</span></summary><div class="acc-body">The field-sourced belief your brand can stand behind, written in plain language and built to outlast any one campaign.</div></details>
-        <details class="acc-item"><summary><span class="acc-left"><span class="acc-name">Messaging</span><span class="acc-tag">The architecture</span></span><span class="plus">+</span></summary><div class="acc-body">Positioning, narrative pillars, proof points, a customer-language lexicon, and ready answers to the objections you hear most.</div></details>
-        <details class="acc-item"><summary><span class="acc-left"><span class="acc-name">Starter</span><span class="acc-tag">First themes</span></span><span class="plus">+</span></summary><div class="acc-body">Three to five content themes the architecture points to, handed over ready to act on the week we wrap.</div></details>
-        <details class="acc-item"><summary><span class="acc-left"><span class="acc-name">Readout</span><span class="acc-tag">The handoff</span></span><span class="plus">+</span></summary><div class="acc-body">A working session that puts the findings in front of the people who have to carry the story, so it lands as a shared belief.</div></details>
+      <div class="acc" id="incAcc">
+        <details class="acc-item inc-item" open>
+          <summary><span class="inc-illus"><svg viewBox="0 0 48 48" fill="none" stroke-linecap="square"><line x1="7" y1="39" x2="41" y2="39" stroke="#17160F" stroke-width="2"/><line x1="14" y1="39" x2="14" y2="30" stroke="#17160F" stroke-width="2.5"/><line x1="22" y1="39" x2="22" y2="22" stroke="#17160F" stroke-width="2.5"/><line x1="30" y1="39" x2="30" y2="13" stroke="#DB4B24" stroke-width="2.5"/><line x1="38" y1="39" x2="38" y2="26" stroke="#17160F" stroke-width="2.5"/></svg></span><span class="acc-left"><span class="acc-name">Signals</span><span class="acc-tag">The library</span></span><span class="plus">+</span></summary>
+          <div class="acc-body">Field research, customer interviews, and call mining, pulled into one structured record: the objections, the verbatim language, the use cases, and the moments a deal turned.</div>
+        </details>
+        <details class="acc-item inc-item">
+          <summary><span class="inc-illus"><svg viewBox="0 0 48 48" fill="none" stroke="#17160F" stroke-width="2" stroke-linecap="square"><circle cx="24" cy="24" r="13"/><line x1="24" y1="5" x2="24" y2="13"/><line x1="24" y1="35" x2="24" y2="43"/><line x1="5" y1="24" x2="13" y2="24"/><line x1="35" y1="24" x2="43" y2="24"/><circle cx="24" cy="24" r="3.5" fill="#DB4B24" stroke="none"/></svg></span><span class="acc-left"><span class="acc-name">Conviction</span><span class="acc-tag">The point of view</span></span><span class="plus">+</span></summary>
+          <div class="acc-body">The field-sourced belief your brand can stand behind, written in plain language and built to outlast any one campaign.</div>
+        </details>
+        <details class="acc-item inc-item">
+          <summary><span class="inc-illus"><svg viewBox="0 0 48 48" fill="none" stroke="#17160F" stroke-width="2" stroke-linecap="square"><line x1="8" y1="40" x2="40" y2="40"/><line x1="11" y1="13" x2="37" y2="13"/><line x1="15" y1="13" x2="15" y2="40"/><line x1="24" y1="13" x2="24" y2="40" stroke="#DB4B24"/><line x1="33" y1="13" x2="33" y2="40"/></svg></span><span class="acc-left"><span class="acc-name">Messaging</span><span class="acc-tag">The architecture</span></span><span class="plus">+</span></summary>
+          <div class="acc-body">Positioning, narrative pillars, proof points, a customer-language lexicon, and ready answers to the objections you hear most.</div>
+        </details>
+        <details class="acc-item inc-item">
+          <summary><span class="inc-illus"><svg viewBox="0 0 48 48" fill="none" stroke="#17160F" stroke-width="2" stroke-linecap="square"><line x1="15" y1="7" x2="15" y2="41"/><line x1="9" y1="41" x2="25" y2="41"/><path d="M15 9 H34 L29 15 L34 21 H15 Z" fill="#DB4B24" stroke="none"/></svg></span><span class="acc-left"><span class="acc-name">Starter</span><span class="acc-tag">First themes</span></span><span class="plus">+</span></summary>
+          <div class="acc-body">Three to five content themes the architecture points to, handed over ready to act on the week we wrap.</div>
+        </details>
+        <details class="acc-item inc-item">
+          <summary><span class="inc-illus"><svg viewBox="0 0 48 48" fill="none" stroke="#17160F" stroke-width="2" stroke-linecap="square"><rect x="8" y="9" width="32" height="24"/><line x1="24" y1="33" x2="24" y2="40"/><line x1="17" y1="40" x2="31" y2="40"/><polyline points="13,28 19,22 26,25 35,15" stroke="#DB4B24" stroke-width="2.5"/></svg></span><span class="acc-left"><span class="acc-name">Readout</span><span class="acc-tag">The handoff</span></span><span class="plus">+</span></summary>
+          <div class="acc-body">A working session that puts the findings in front of the people who have to carry the story, so it lands as a shared belief.</div>
+        </details>
       </div>
-    </div>
-    <div class="scope-block">
-      <h4>Where it goes next</h4>
-      <div class="acc">
-        <details class="acc-item"><summary><span class="acc-left"><span class="acc-name">Field Site</span><span class="acc-tag">Website &amp; homepage</span></span><span class="plus">+</span></summary><div class="acc-body">Your most-visited page rebuilt around the conviction, so the first thing a buyer reads is the thing they already believe. The architecture, made public.</div></details>
-        <details class="acc-item"><summary><span class="acc-left"><span class="acc-name">Field Reports</span><span class="acc-tag">Customer case studies</span></span><span class="plus">+</span></summary><div class="acc-body">Documented proof from real customers, told in their own language. The stories your team reaches for in the middle of a deal.</div></details>
-        <details class="acc-item"><summary><span class="acc-left"><span class="acc-name">Field Dispatch</span><span class="acc-tag">Ongoing production</span></span><span class="plus">+</span></summary><div class="acc-body">A steady run of articles, posts, and assets pulled straight from the signal library, so the team never stares at a blank page.</div></details>
-        <details class="acc-item"><summary><span class="acc-left"><span class="acc-name">Field Guide</span><span class="acc-tag">Editorial system</span></span><span class="plus">+</span></summary><div class="acc-body">The calendar, briefs, and standards that keep every piece on-message as your output and your team grow.</div></details>
-        <details class="acc-item"><summary><span class="acc-left"><span class="acc-name">Field Campaign</span><span class="acc-tag">Integrated campaigns</span></span><span class="plus">+</span></summary><div class="acc-body">A focused push across channels with one idea carried from first touch to closed deal, built on the architecture instead of invented fresh.</div></details>
-        <details class="acc-item"><summary><span class="acc-left"><span class="acc-name">Field Team</span><span class="acc-tag">Sales, product &amp; exec voice</span></span><span class="plus">+</span></summary><div class="acc-body">Everyone who talks to customers becomes a voice in the market, each one working from the same shared conviction.</div></details>
-      </div>
-    </div>
     </div>
     <div class="price">
       <div class="fig">Starting at $15K</div>
       <div class="det">Five weeks · Remote or on-site · Expansion engagements priced separately</div>
     </div>
     <p class="roi">It replaces months of guessing and a positioning project that runs $50K and up at an agency. After it, every dollar you spend on campaigns, content, and enablement runs on messaging your buyers already validated.</p>
+    <div class="scope-block scope-next">
+      <h4>Where it goes next</h4>
+      <div class="acc">
+        <details class="acc-item next-item"><summary><span class="acc-name">Field Site</span><span class="dots"></span><span class="acc-tag">Website &amp; homepage</span><span class="plus">+</span></summary><div class="acc-body">Your most-visited page rebuilt around the conviction, so the first thing a buyer reads is the thing they already believe. The architecture, made public.</div></details>
+        <details class="acc-item next-item"><summary><span class="acc-name">Field Reports</span><span class="dots"></span><span class="acc-tag">Customer case studies</span><span class="plus">+</span></summary><div class="acc-body">Documented proof from real customers, told in their own language. The stories your team reaches for in the middle of a deal.</div></details>
+        <details class="acc-item next-item"><summary><span class="acc-name">Field Dispatch</span><span class="dots"></span><span class="acc-tag">Ongoing production</span><span class="plus">+</span></summary><div class="acc-body">A steady run of articles, posts, and assets pulled straight from the signal library, so the team never stares at a blank page.</div></details>
+        <details class="acc-item next-item"><summary><span class="acc-name">Field Guide</span><span class="dots"></span><span class="acc-tag">Editorial system</span><span class="plus">+</span></summary><div class="acc-body">The calendar, briefs, and standards that keep every piece on-message as your output and your team grow.</div></details>
+        <details class="acc-item next-item"><summary><span class="acc-name">Field Campaign</span><span class="dots"></span><span class="acc-tag">Integrated campaigns</span><span class="plus">+</span></summary><div class="acc-body">A focused push across channels with one idea carried from first touch to closed deal, built on the architecture instead of invented fresh.</div></details>
+        <details class="acc-item next-item"><summary><span class="acc-name">Field Team</span><span class="dots"></span><span class="acc-tag">Sales, product &amp; exec voice</span><span class="plus">+</span></summary><div class="acc-body">Everyone who talks to customers becomes a voice in the market, each one working from the same shared conviction.</div></details>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- WHO -->
-<section class="section">
+<section class="section" id="s06">
   <div class="wrap reveal">
     <div class="eyebrow"><span class="mono">&sect; 06 / Who It's For</span></div>
     <h2>B2B SaaS where trust has to be earned.</h2>
-    <ul class="who">
-      <li>Founders and marketing leaders at B2B SaaS companies selling into skeptical, word-of-mouth markets.</li>
-      <li>Categories where the buyers are their own community, and a peer's recommendation outweighs anything you can say about yourself.</li>
-      <li>Buyers who are wary of new tools and slow to adopt a new system, where credibility gets built one honest conversation at a time.</li>
-      <li>Teams with a strong product and a story still based on what they assume their buyers think.</li>
-    </ul>
+    <div class="checklist">
+      <div class="check-group">
+        <span class="cl-label mono">Good fit if</span>
+        <div class="check-item check"><span class="box"></span><span class="ct">Your buyers trust peers more than vendors.</span></div>
+        <div class="check-item check"><span class="box"></span><span class="ct">You believe the truest version of your story is already in your customers' mouths.</span></div>
+        <div class="check-item check"><span class="box"></span><span class="ct">You would rather earn belief than buy attention.</span></div>
+        <div class="check-item check"><span class="box"></span><span class="ct">Your product is better than your marketing makes it look.</span></div>
+      </div>
+      <div class="check-group">
+        <span class="cl-label mono">Not this</span>
+        <div class="check-item"><span class="box"></span><span class="ct">You trust a clever agency tagline more than what your customers say.</span></div>
+        <div class="check-item"><span class="box"></span><span class="ct">You would rather tell the market what to think than listen to it.</span></div>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- BIO -->
-<section class="section">
+<section class="section" id="s07">
   <div class="wrap reveal">
     <div class="eyebrow"><span class="mono">&sect; 07 / The Operator</span></div>
     <div class="bio-grid">
@@ -349,7 +442,7 @@
 </section>
 
 <!-- WHAT CHANGES (success / transformation) -->
-<section class="section">
+<section class="section" id="s08">
   <div class="wrap reveal">
     <div class="eyebrow"><span class="mono">&sect; 08 / What Changes</span></div>
     <h2>When the message is right, you can feel it.</h2>
@@ -382,7 +475,7 @@
     </form>
 
     <div class="confirm" id="confirm">
-      <h3>Field notes received.</h3>
+      <span class="stamp">Field Notes Received</span>
       <p>Thanks. I'll read this properly and reply within two business days with a few questions and next steps.</p>
     </div>
   </div>
@@ -390,8 +483,27 @@
 
 <footer>
   <div class="wrap">
-    <span class="mono">Fieldwork Systems / The Field Study</span>
-    <span class="mono">Conviction, collected in the field</span>
+    <svg class="seal" viewBox="0 0 100 100" aria-hidden="true">
+      <defs><path id="sealRing" d="M 50,13 A 37,37 0 1,1 49.99,13"/></defs>
+      <circle cx="50" cy="50" r="47" fill="none" stroke="#4a534d" stroke-width="1"/>
+      <circle cx="50" cy="50" r="29" fill="none" stroke="#4a534d" stroke-width="1"/>
+      <text class="seal-text"><textPath href="#sealRing" startOffset="0">FIELDWORK SYSTEMS · CONVICTION FROM THE FIELD · </textPath></text>
+      <g stroke="#DB4B24" stroke-width="2" fill="none" stroke-linecap="square">
+        <path d="M41,43 v-4 h4"/>
+        <path d="M55,39 h4 v4"/>
+        <path d="M41,57 v4 h4"/>
+        <path d="M55,61 h4 v-4"/>
+      </g>
+      <g fill="#cfccc2">
+        <rect x="47.3" y="44.5" width="2.2" height="11"/>
+        <rect x="47.3" y="44.5" width="6.5" height="2.2"/>
+        <rect x="47.3" y="49.3" width="5" height="2.2"/>
+      </g>
+    </svg>
+    <div class="colophon">
+      <span class="mono">Fieldwork Systems · The Field Study Vol. 01 · Est. 2026</span>
+      <span class="mono">Conviction, collected in the field</span>
+    </div>
   </div>
 </footer>
 
@@ -414,6 +526,49 @@
     function update(){ if(pastHero && !atForm){sticky.classList.add('show');} else {sticky.classList.remove('show');} }
     new IntersectionObserver(function(e){pastHero=!e[0].isIntersecting;update();},{threshold:0}).observe(hero);
     new IntersectionObserver(function(e){atForm=e[0].isIntersecting;update();},{threshold:0.15}).observe(formSec);
+  })();
+
+  (function(){
+    var acc=document.getElementById('incAcc'); if(!acc) return;
+    var items=[].slice.call(acc.querySelectorAll('details'));
+    items.forEach(function(d){
+      d.addEventListener('toggle',function(){
+        if(d.open){items.forEach(function(o){if(o!==d)o.open=false;});}
+      });
+    });
+  })();
+
+  (function(){
+    var nav=document.querySelector('.dotnav'); if(!nav) return;
+    var fill=document.getElementById('dnFill');
+    var links=[].slice.call(nav.querySelectorAll('a'));
+    var map={};
+    links.forEach(function(a){
+      map[a.getAttribute('data-target')]=a;
+      a.addEventListener('click',function(e){
+        var el=document.getElementById(a.getAttribute('data-target'));
+        if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth'});}
+      });
+    });
+    function progress(){
+      var de=document.documentElement;
+      var max=de.scrollHeight-window.innerHeight;
+      var p=max>0?((window.scrollY||de.scrollTop)/max)*100:0;
+      if(fill)fill.style.height=Math.max(0,Math.min(100,p))+'%';
+    }
+    window.addEventListener('scroll',progress,{passive:true});
+    window.addEventListener('resize',progress); progress();
+    if('IntersectionObserver' in window){
+      var io=new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if(en.isIntersecting){
+            links.forEach(function(l){l.classList.remove('active');});
+            if(map[en.target.id])map[en.target.id].classList.add('active');
+          }
+        });
+      },{rootMargin:'-45% 0px -50% 0px',threshold:0});
+      Object.keys(map).forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el);});
+    }
   })();
 
   (function(){
