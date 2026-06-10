@@ -189,6 +189,18 @@
   .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
   .reveal.in{opacity:1;transform:none}
   @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+  .sticky-cta{position:fixed;right:24px;bottom:24px;z-index:60;display:inline-flex;align-items:center;gap:10px;
+    font-family:"Archivo",sans-serif;font-weight:700;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.06em;
+    background:var(--ink);color:var(--paper);padding:14px 22px;text-decoration:none;
+    box-shadow:0 6px 24px rgba(23,22,15,0.22);
+    opacity:0;transform:translateY(14px);pointer-events:none;transition:opacity .3s ease,transform .3s ease,background .2s ease}
+  .sticky-cta.show{opacity:1;transform:none;pointer-events:auto}
+  .sticky-cta:hover{background:var(--mark)}
+  .sticky-cta .arr{transition:transform .2s ease}
+  .sticky-cta:hover .arr{transform:translateX(3px)}
+  @media (max-width:560px){.sticky-cta{right:14px;bottom:14px;padding:13px 18px;font-size:0.76rem}}
+  @media (prefers-reduced-motion:reduce){.sticky-cta{transform:none;transition:opacity .2s ease}.sticky-cta.show{transform:none}}
 </style>
 </head>
 <body>
@@ -200,12 +212,14 @@
   <div class="mono">The Field Study</div>
 </div>
 
+<a href="#start" class="sticky-cta" aria-label="Start a Field Study">Start a Field Study <span class="arr">→</span></a>
+
 <!-- HERO -->
 <section class="section section--hero">
   <div class="wrap reveal">
     <div class="eyebrow"><span class="mono">&sect; 01 / Entry Engagement</span><span class="mono coord">N 33.52&deg; W 86.81&deg;</span></div>
     <h1>Conviction comes from the <em>field</em>, not the conference room.</h1>
-    <p class="lede">The Field Study is a five-week engagement that builds your messaging from what your customers and the people who sell to them actually say.</p>
+    <p class="lede">The Field Study is a five-week engagement that builds your messaging from what your customers and salespeople actually say, so your brand finally sounds like the company your best customers already know you are.</p>
     <div class="hero-meta">
       <a href="#start" class="cta">Start a Field Study <span class="arr">→</span></a>
       <span class="hero-note">For B2B SaaS companies whose buyers are skeptical, peer-driven, and slow to trust a new system.</span>
@@ -334,10 +348,19 @@
   </div>
 </section>
 
+<!-- WHAT CHANGES (success / transformation) -->
+<section class="section">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="mono">&sect; 08 / What Changes</span></div>
+    <h2>When the message is right, you can feel it.</h2>
+    <p class="body">Your team describes the product the way your best customers already do. Sales spends less time translating and more time closing. New hires pick up the story in their first week. And the brand finally carries the weight your product has earned.</p>
+  </div>
+</section>
+
 <!-- FORM -->
 <section class="section section--dark" id="start">
   <div class="wrap reveal">
-    <div class="eyebrow"><span class="mono">&sect; 08 / Start</span><span class="mono coord">Reply &le; 2 business days</span></div>
+    <div class="eyebrow"><span class="mono">&sect; 09 / Start</span><span class="mono coord">Reply &le; 2 business days</span></div>
     <div class="form-head">Start a Field Study.</div>
     <p class="form-sub">Tell me what you're trying to figure out.</p>
 
@@ -380,6 +403,17 @@
       entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});
     },{threshold:0.12});
     els.forEach(function(e){io.observe(e)});
+  })();
+
+  (function(){
+    var hero=document.querySelector('.section--hero');
+    var formSec=document.getElementById('start');
+    var sticky=document.querySelector('.sticky-cta');
+    if(!hero||!formSec||!sticky||!('IntersectionObserver' in window))return;
+    var pastHero=false, atForm=false;
+    function update(){ if(pastHero && !atForm){sticky.classList.add('show');} else {sticky.classList.remove('show');} }
+    new IntersectionObserver(function(e){pastHero=!e[0].isIntersecting;update();},{threshold:0}).observe(hero);
+    new IntersectionObserver(function(e){atForm=e[0].isIntersecting;update();},{threshold:0.15}).observe(formSec);
   })();
 
   (function(){
